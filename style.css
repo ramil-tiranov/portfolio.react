@@ -1,0 +1,149 @@
+*{
+    margin: 0; 
+    /* убрали отступ сверху от окна браузера */
+    box-sizing: border-box;
+    /* когда мы указываем границы бокса он их учитывает со 100 отдачей */
+}
+body{
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+.form{
+    width: 500px;
+    display: grid;
+    padding: 32px;
+    padding-bottom: 24px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    /*  0- сдвиг тени по горизонтали 4px- по вертикали 16px- толщина тени; */
+}
+.title{
+    margin-bottom: 16px;
+    
+    color: #31374d;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 26px;
+    margin: 0;
+}
+.text2{
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+.res{
+    width: 75%;
+}
+label{
+    position: relative;
+    margin-bottom: 16px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+input{
+    
+    height: 40px;
+    width: 100%;
+    outline: none;
+    padding: 0 16px;
+    /*   padding: 0 16px;- в инпуте сделали отспуп для ввождения данных где 0 это сверху снизу 16 по бокам */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    /* -webkit-appearance: ; */
+    /* -moz-appearance: textfield; */
+}
+input:focus,
+label.filt input{
+    border-color: #57b9ff;
+    /*  filt здесь. здесь он меняет цвет кнопки */
+}
+button:focus {border: none;}
+input:focus + span,
+label.filt span{
+    /*  filt и здесь. а здесь он перемещает email так же меняет цвет email и уменьшает текст email*/
+    top: -7px;
+    color:#dc1c12;
+    
+    left: 8px;
+    font-size: 12px;
+}
+
+
+span{
+    position: absolute;
+    left: 16px;
+    top: 27%;
+    font-weight: 300;
+    color: #555;
+    background-color: #fff;
+    /*  background-color: #fff; - вокруг текста сделали оболочку которая перекрывает поля инпута */
+    transition: all 0.3s ease-in-out;
+    /* анимация при фокусе чтобы были плавными */
+    padding: 0 4px;
+    /* padding- внутренний отступ где 0 сверху снизу 4- по бокам */
+}
+.button{
+    position: relative;
+    top: -15px;
+    cursor: pointer;
+    justify-self: end;
+    color:#fff;
+    background-color: #dc1919;
+    padding: 10px 24px;
+    border-radius: 4px;
+    margin-top: -40px;
+}
+.check{
+    display: flex;
+   margin-top:20px;
+}
+#input4{
+  
+    width: 20%;
+    height: 20px;
+    width: 20px;
+}
+.may{
+    margin-left: 30px;
+    font-size: 19px;
+    line-height: 20px;
+    font-weight: 300;
+    text-align: justify;
+}
+#end{
+    margin-top: 33px;
+    width: 100%;
+    
+}
+#calendar{
+    width:50%;
+    margin-bottom: 20px;
+}
+.calendar{
+    width: 80%;
+    margin-top: 20px;
+}
+.call{
+    display: flex;
+    flex-direction: column;
+}
+.calen{
+    font-size: 14px;
+}
+
+.comp{
+    top: -7px;
+    color:#57b9ff;
+    left: 8px;
+    font-size: 12px;
+}

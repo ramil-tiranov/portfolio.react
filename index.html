@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторизация</title>
+  <link rel='stylesheet' href='style.css'>
+</head>
+
+<body>
+  <div class="form">
+    <div class="title">АВТОСТРАХОВАНИЕ</div>
+    <div class="text2">Заполните форму, чтобы рассчитать стоимость </div>
+    <label id="email">
+      <!-- label сочитается с input. Теперь все что в label будет реагировать как input -->
+      <input autofocus tabindex="0" id="input1" class="iin" oninput="checkInput()" type="tel" pattern="[0-9]{14}"
+        placeholder="+7(  )   -  - " value="+7(" maxlength="14" readonly onkeydown="appendInput(event)">
+      <span id="complete1">Номер телофона</span>
+    </label>
+
+    <label id="password">
+      <input id="input2" type="tel" inputmode="numeric" readonly onkeydown="appendInputt(event)">
+      <span id="complete2">ИИН водителя</span>
+    </label>
+
+    <label class="res">
+      <input id="input3" type="text" readonly onkeydown="appendInputtt(event)" disabled>
+      <span id="complete3">Введите Гос.номер авто</span>
+    </label>
+
+    <button class="button">Найти</button>
+    <form class="call">
+
+      <input type="date" id="calendar" name="calendar">
+
+      <label for="calendar" class="calen"> Дата начала действия полиса </label>
+    </form>
+    <div class="check">
+      <input id="input4" type="checkbox">
+      <p class="may">Я соглашаюсь на сбор и обработку моих <br> персональных данных <br>
+        <a href="https://old.kupipolis.kz/rules/personal_data_policy.pdf" target="_blanck">и ознакомился с правилами
+        </a>
+      </p>
+
+    </div>
+    <button class="button" id="end"> рассчитать</button>
+  </div>
+
+
+
+
+  <script>
+
+    let input = document.getElementById('input1');
+    let input2 = document.getElementById('input2');
+    let input3 = document.getElementById('input3');
+    let complete1 = document.getElementById('complete1');
+    let complete2 = document.getElementById('complete2');
+    let complete3 = document.getElementById('complete3');
+    let end = document.getElementById('end');
+    let calendar = document.getElementById('calendar');
+    function appendInput(event) {
+      event.preventDefault(); // Предотвращает добавление символа в поле ввода
+
+      var key = event.key;
+
+      if (/^\d$/.test(key) && input.value.length < 16) {
+        input.value += key;
+        // Добавляет цифру к текущему значению
+        if (input.value.length === 6 && input.value.length !== 7)
+
+          input.value += ')';
+        if (input.value.length === 10 && input.value.length !== 11)
+
+          input.value += '-';
+
+        if (input.value.length === 13 && input.value.length !== 14)
+
+          input.value += '-';
+
+        if (input.value.length === 16) {
+          input2.disabled = false;
+          input2.focus();
+          complete1.classList.add("comp");
+        }
+      }
+
+    }
+
+
+
+
+
+
+    function appendInputt(event) {
+      event.preventDefault(); // Предотвращает добавление символа в поле ввода
+
+      var key = event.key;
+      if (/^\d$/.test(key) && input2.value.length < 12) {
+        input2.value += key;
+        // Добавляет цифру к текущему значению
+
+
+      }
+      if (input2.value.length === 12) {
+        input3.disabled = false;
+        input3.focus();
+        complete2.classList.add("comp");
+      }
+    }
+
+
+
+    input2.addEventListener('click', function (event) {
+      // Выполняем действие при клике
+      if (input1.value.length !== 12) {
+
+        input1.focus();
+
+      }
+    });
+
+    input3.addEventListener('click', function (event) {
+      // Выполняем действие при клике
+      if (input2.value.length !== 12) {
+
+        input2.focus();
+
+      }
+    });
+
+
+
+
+
+
+
+    function appendInputtt(event) {
+      event.preventDefault(); // Предотвращает добавление символа в поле ввода
+
+      var key = event.key;
+      if (/^[a-zA-Z0-9]$/.test(key) && input3.value.length < 7) {
+        input3.value += key.toUpperCase();
+        // Добавляет цифру или букву к текущему значению
+      }
+      if (input3.value.length === 7) {
+        calendar.focus();
+        complete3.classList.add("comp");
+      }
+
+
+    }
+
+
+    input1.addEventListener('keydown', function (event) {
+      if (event.key === 'Backspace' && input1.value.length !== 3) {
+        event.preventDefault();
+        input1.value = input1.value.slice(0, -1);
+      }
+      if (event.ctrlKey && event.key === 'v') {
+        event.preventDefault();
+        navigator.clipboard.readText()
+          .then(clipText => {
+            const startPos = input1.selectionStart;
+            const endPos = input1.selectionEnd;
+            const firstPart = input1.value.substring(0, startPos);
+            const secondPart = input1.value.substring(endPos, input1.value.length);
+            let formattedText = clipText.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, '$1)$2-$3-$4');
+
+
+
+            if (formattedText.length >= 13 && formattedText.length !== 14) {
+              formattedText = clipText.replace(/(\d)(\d{3})(\d{3})(\d{2})(\d{2})/, '$1$2)$3-$4-$5');
+              formattedText = formattedText.substring(2);
+              console.log('от 12 до 12');
+              console.log(formattedText.length);
+            }
+
+            if (formattedText.length >= 14) {
+              formattedText = formattedText.replace(/(\d)(\d{3})(\d{3})(\d{2})(\d{2})/, '$1$2)$3-$4-$5');
+              formattedText = formattedText.substring(1);
+              console.log("11");
+              console.log(formattedText.length);
+            }
+
+            let newText = "+7(" + formattedText;
+            if (newText.length > 16) {
+              newText = newText.substring(0, 16);
+            }
+            input1.value = newText;
+            input1.setSelectionRange(4, 4); // Set cursor position to after '+7('
+          })
+          .catch(err => {
+            console.error('Failed to read clipboard contents: ', err);
+          });
+      }
+    });
+
+    function insertText() {
+      var inputText = document.getElementById('input1').value;
+      if (inputText.length > 16) {
+        inputText = inputText.substring(0, 16); // truncate the input text to 16 characters
+      }
+      document.getElementById('outputField').value = inputText; // insert the truncated text into the output field
+    }
+
+    // Обработчик события для input2
+    input2.addEventListener('keydown', function (event) {
+      if (event.key === 'Backspace') {
+        event.preventDefault();
+        input2.value = input2.value.slice(0, -1);
+      }
+      if (event.ctrlKey & event.key === 'v') {
+        event.preventDefault();
+        const text = navigator.clipboard.readText()
+          .then(clipText => {
+            input2.value += clipText;;
+          })
+          .catch(err => {
+            console.error('Failed to read clipboard contents: ', err);
+          });
+      }
+    });
+
+    // Обработчик события для input3
+    input3.addEventListener('keydown', function (event) {
+      if (event.key === 'Backspace') {
+        event.preventDefault();
+        input3.value = input3.value.slice(0, -1);
+      }
+      if (event.ctrlKey & event.key === 'v') {
+        event.preventDefault();
+        const text = navigator.clipboard.readText()
+          .then(clipText => {
+            input3.value += clipText.toUpperCase();;
+          })
+          .catch(err => {
+            console.error('Failed to read clipboard contents: ', err);
+          });
+      }
+    });
+
+
+
+    end.addEventListener("click", function () {
+
+
+      if (input3.value.length !== 7) {
+        alert("заполните номер Авто!");
+        input3.focus();
+      }
+      if (input2.value.length !== 12) {
+        alert("заполните ИИН!");
+        input2.focus();
+      }
+      if (input.value.length !== 16) {
+        alert("заполните номер телефона!");
+        input1.focus();
+      }
+      if (input3.value.length === 7 & input2.value.length === 12 & input.value.length === 16) {
+        alert("идет обработка данных.....");
+      }
+
+    })
+  </script>
+
+  <script type="module" src='js.js'></script>
+</body>
+
+</html>
